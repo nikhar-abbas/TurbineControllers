@@ -1,4 +1,4 @@
-# Install script for directory: /Users/nabbas/Documents/TurbineModels/Controllers/FortranControllers/NREL_Baseline/DISCON
+# Install script for directory: /Users/nabbas/Documents/TurbineModels/TurbineControllers/FortranControllers/NREL_Baseline/DISCON
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,18 +34,18 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-   "/Users/nabbas/Documents/TurbineModels/Controllers/FortranControllers/NREL_Baseline/DISCON/../DISCON.dll")
+   "/Users/nabbas/Documents/TurbineModels/TurbineControllers/FortranControllers/NREL_Baseline/DISCON/../DISCON.dll")
   if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
   if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
     message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
   endif()
-file(INSTALL DESTINATION "/Users/nabbas/Documents/TurbineModels/Controllers/FortranControllers/NREL_Baseline/DISCON/.." TYPE SHARED_LIBRARY FILES "/Users/nabbas/Documents/TurbineModels/Controllers/FortranControllers/NREL_Baseline/DISCON/build/DISCON.dll")
-  if(EXISTS "$ENV{DESTDIR}/Users/nabbas/Documents/TurbineModels/Controllers/FortranControllers/NREL_Baseline/DISCON/../DISCON.dll" AND
-     NOT IS_SYMLINK "$ENV{DESTDIR}/Users/nabbas/Documents/TurbineModels/Controllers/FortranControllers/NREL_Baseline/DISCON/../DISCON.dll")
+file(INSTALL DESTINATION "/Users/nabbas/Documents/TurbineModels/TurbineControllers/FortranControllers/NREL_Baseline/DISCON/.." TYPE SHARED_LIBRARY FILES "/Users/nabbas/Documents/TurbineModels/TurbineControllers/FortranControllers/NREL_Baseline/DISCON/build/DISCON.dll")
+  if(EXISTS "$ENV{DESTDIR}/Users/nabbas/Documents/TurbineModels/TurbineControllers/FortranControllers/NREL_Baseline/DISCON/../DISCON.dll" AND
+     NOT IS_SYMLINK "$ENV{DESTDIR}/Users/nabbas/Documents/TurbineModels/TurbineControllers/FortranControllers/NREL_Baseline/DISCON/../DISCON.dll")
     if(CMAKE_INSTALL_DO_STRIP)
-      execute_process(COMMAND "/Library/Developer/CommandLineTools/usr/bin/strip" "$ENV{DESTDIR}/Users/nabbas/Documents/TurbineModels/Controllers/FortranControllers/NREL_Baseline/DISCON/../DISCON.dll")
+      execute_process(COMMAND "/Library/Developer/CommandLineTools/usr/bin/strip" "$ENV{DESTDIR}/Users/nabbas/Documents/TurbineModels/TurbineControllers/FortranControllers/NREL_Baseline/DISCON/../DISCON.dll")
     endif()
   endif()
 endif()
@@ -61,5 +61,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/nabbas/Documents/TurbineModels/Controllers/FortranControllers/NREL_Baseline/DISCON/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/nabbas/Documents/TurbineModels/TurbineControllers/FortranControllers/NREL_Baseline/DISCON/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

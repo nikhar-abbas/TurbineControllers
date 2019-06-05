@@ -68,10 +68,10 @@ REAL(4), SAVE                :: LastTimePC                                      
 REAL(4), SAVE                :: LastTimeVS                                      ! Last time the torque controller was called, sec.
 REAL(4), PARAMETER           :: OnePlusEps    = 1.0 + EPSILON(OnePlusEps)       ! The number slighty greater than unity in single precision.
 REAL(4), PARAMETER           :: PC_DT         =  0.000125  !JASON:THIS CHANGED FOR ITI BARGE:      0.0001                    ! Communication interval for pitch  controller, sec.
-REAL(4), PARAMETER           :: PC_KI         =       0.0018777778              ! Integral gain for pitch controller at rated pitch (zero), (-).
+REAL(4), PARAMETER           :: PC_KI         =       0.0022                    ! Integral gain for pitch controller at rated pitch (zero), (-).
 REAL(4), PARAMETER           :: PC_KK         =       0.1047197                 ! Pitch angle where the the derivative of the aerodynamic power w.r.t. pitch has increased by a factor of two relative to the derivative at rated pitch (zero), rad.
-REAL(4), PARAMETER           :: PC_KP         =       0.007933333               ! Proportional gain for pitch controller at rated pitch (zero), sec.
-REAL(4), PARAMETER           :: PC_MaxPit     =       1.57079                  ! Maximum pitch setting in pitch controller, rad.
+REAL(4), PARAMETER           :: PC_KP         =       0.0072                    ! Proportional gain for pitch controller at rated pitch (zero), sec.
+REAL(4), PARAMETER           :: PC_MaxPit     =       1.57079                   ! Maximum pitch setting in pitch controller, rad.
 REAL(4), PARAMETER           :: PC_MaxRat     =       0.03490658                ! Maximum pitch  rate (in absolute value) in pitch  controller, rad/s.
 REAL(4), PARAMETER           :: PC_MinPit     =       -0.013962                 ! Minimum pitch setting in pitch controller, rad.
 REAL(4), PARAMETER           :: PC_RefSpd     =     64.1862                     ! Desired (reference) HSS speed for pitch controller, rad/s.
@@ -97,13 +97,13 @@ REAL(4), PARAMETER           :: VS_RtGnSp     =     64.1862                     
 REAL(4), PARAMETER           :: VS_RtPwr      =   5296610.17                    ! Rated generator generator power in Region 3, Watts. -- chosen to be 5MW divided by the electrical generator efficiency of 94.4%
 REAL(4), SAVE                :: VS_Slope15                                      ! Torque/speed slope of region 1 1/2 cut-in torque ramp , N-m/(rad/s).
 REAL(4), SAVE                :: VS_Slope25                                      ! Torque/speed slope of region 2 1/2 induction generator, N-m/(rad/s).
-REAL(4), PARAMETER           :: VS_SlPc       =      10.0                       ! Rated generator slip percentage in Region 2 1/2, %.
+REAL(4), PARAMETER           :: VS_SlPc       =      15.0                       ! Rated generator slip percentage in Region 2 1/2, %.
 REAL(4), SAVE                :: VS_SySp                                         ! Synchronous speed of region 2 1/2 induction generator, rad/s.
 REAL(4), SAVE                :: VS_TrGnSp                                       ! Transitional generator speed (HSS side) between regions 2 and 2 1/2, rad/s.
 
 ! Region 2.5 Smoothing Parameters
 Real(4), PARAMETER           :: GainBias_Mode = 1                               ! Gain Bias Mode, 0 = no gain bais, 1 = gain bias as defined by David Schlipf, -.
-Real(4), PARAMETER           :: VS_GainBias   = 40                              ! Variable speed torque controller gain bias, (rad/s)/(rad).
+Real(4), PARAMETER           :: VS_GainBias   = 30                              ! Variable speed torque controller gain bias, (rad/s)/(rad).
 Real(4), PARAMETER           :: PC_GainBias   = 0.0001                          ! Collective pitch controller gain bias, (rad/s)/(Nm).
 Real(4), PARAMETER           :: CornerFreq_GB = 0.1                             ! Cornering frequency of first order low pass filter for the gain bias signal, Hz.
 Real(4)                      :: GenSpeedF_VS                                    ! Filtered generator speed signal for VS Torque controller, rad/s.
@@ -176,10 +176,11 @@ IF ( iStatus == 0 )  THEN  ! .TRUE. if we're on the first call to the DLL
    ! Inform users that we are using this user-defined routine:
 
    aviFAIL  = 1
-   ErrMsg   = 'Running with torque and pitch control of the NREL offshore '// &
-              '5MW baseline wind turbine from DISCON.dll as written by J. '// &
-              'Jonkman of NREL/NWTC for use in the IEA Annex XXIII OC3 '   // &
-              'studies.'
+   ErrMsg   = 'Running with torque and pitch control of the NREL Baseline '// &
+              'wind turbine controller logic from DISCON.dll as originally '// &
+              'written by J. Jonkman of NREL/NWTC. The logic has been modified ' // &
+              'by Nikhar Abbas to include region 2.5 smoothing as developed by ' // &
+              'Sowento energy. The controller has been tuned for use on the BAR.'
 
    ! Determine some torque control parameters not specified directly:
 
@@ -414,7 +415,7 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
    ! Compute the generator torque, which depends on which region we are in:
 
       ! IF ( (   GenSpeedF_VS >= VS_RtGnSp ) .OR. (  PitCom(1) >= VS_Rgn3MP ) )  THEN ! We are in region 3 - power is constant
-      IF (   GenSpeedF_VS >= VS_RtGnSp )  THEN ! We are in region 3 - power is constant
+      IF (   GenSpeedF_VS >= VS_RtGnSp )  THEN ! We are in region 3 - power is constant, no pitch constraint on region 3 torque controller
          GenTrq = VS_RtPwr/PC_RefSpd
       ELSEIF ( GenSpeedF_VS <= VS_CtInSp )  THEN                                    ! We are in region 1 - torque is zero
          GenTrq = 0.0
@@ -524,9 +525,6 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
          PitCom(K)  = MIN( MAX( PitCom(K), PC_MinPit ), PC_MaxPit )     ! Saturate the overall command using the pitch angle limits         
          
       ENDDO          ! K - all blades
-         ! print *, 'BlPitch1 = ', PitCom(1)
-         ! print *, 'BlPitch2 = ', PitCom(2)
-         ! print *, 'BlPitch3 = ', PitCom(3)
 
 
    ! Reset the value of LastTimePC to the current value:
