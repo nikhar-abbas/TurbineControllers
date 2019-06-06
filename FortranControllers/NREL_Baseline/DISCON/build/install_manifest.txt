@@ -1,1 +1,0 @@
-/Users/nabbas/Documents/TurbineModels/TurbineControllers/FortranControllers/NREL_Baseline/DISCON/../DISCON.dll
