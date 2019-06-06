@@ -15,11 +15,11 @@
 #
 
 cmake_minimum_required(VERSION 2.8.12)
-project(DISCON)
+project(DISCON_BAR)
 enable_language(Fortran)
 
 set(SOURCE_PATH
-	"${CMAKE_CURRENT_LIST_DIR}/DISCON.F90"
+	"${CMAKE_CURRENT_LIST_DIR}/DISCON_BAR.F90"
 )
 file(TO_CMAKE_PATH ${SOURCE_PATH} SOURCE_PATH)
 
@@ -46,8 +46,8 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   set(CMAKE_MACOSX_RPATH 1)
 endif()
 
-add_library(DISCON SHARED ${SOURCE_PATH})
-set_target_properties(DISCON PROPERTIES PREFIX "" SUFFIX ".dll")
+add_library(DISCON_BAR SHARED ${SOURCE_PATH})
+set_target_properties(DISCON_BAR PROPERTIES PREFIX "" SUFFIX ".dll")
 
 # if this project is built standlone
 if (${CMAKE_CURRENT_LIST_DIR} STREQUAL ${CMAKE_SOURCE_DIR})
@@ -57,4 +57,4 @@ else()
   set(INSTALL_DEST "${CMAKE_BINARY_DIR}/reg_tests/glue-codes/openfast/5MW_Baseline/ServoData")
 endif()
 
-install(TARGETS DISCON DESTINATION ${INSTALL_DEST})
+install(TARGETS DISCON_BAR DESTINATION ${INSTALL_DEST})
