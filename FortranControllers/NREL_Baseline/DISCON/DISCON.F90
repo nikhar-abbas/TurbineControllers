@@ -68,12 +68,12 @@ REAL(4), SAVE                :: LastTimePC                                      
 REAL(4), SAVE                :: LastTimeVS                                      ! Last time the torque controller was called, sec.
 REAL(4), PARAMETER           :: OnePlusEps    = 1.0 + EPSILON(OnePlusEps)       ! The number slighty greater than unity in single precision.
 REAL(4), PARAMETER           :: PC_DT         =  0.000125  !JASON:THIS CHANGED FOR ITI BARGE:      0.0001                    ! Communication interval for pitch  controller, sec.
-REAL(4), PARAMETER           :: PC_KI         =       0.0022                    ! Integral gain for pitch controller at rated pitch (zero), (-).
-REAL(4), PARAMETER           :: PC_KK         =       0.1047197                 ! Pitch angle where the the derivative of the aerodynamic power w.r.t. pitch has increased by a factor of two relative to the derivative at rated pitch (zero), rad.
-REAL(4), PARAMETER           :: PC_KP         =       0.0072                    ! Proportional gain for pitch controller at rated pitch (zero), sec.
-REAL(4), PARAMETER           :: PC_MaxPit     =       1.57079                   ! Maximum pitch setting in pitch controller, rad.
-REAL(4), PARAMETER           :: PC_MaxRat     =       0.03490658                ! Maximum pitch  rate (in absolute value) in pitch  controller, rad/s.
-REAL(4), PARAMETER           :: PC_MinPit     =       -0.013962                 ! Minimum pitch setting in pitch controller, rad.
+REAL(4), PARAMETER           :: PC_KI         =       0.002168                  ! Integral gain for pitch controller at rated pitch (zero), (-).
+REAL(4), PARAMETER           :: PC_KK         =       0.366519                  ! Pitch angle where the the derivative of the aerodynamic power w.r.t. pitch has increased by a factor of two relative to the derivative at rated pitch (zero), rad.
+REAL(4), PARAMETER           :: PC_KP         =       0.007226                  ! Proportional gain for pitch controller at rated pitch (zero), sec.
+REAL(4), PARAMETER           :: PC_MaxPit     =       1.570796                  ! Maximum pitch setting in pitch controller, rad.
+REAL(4), PARAMETER           :: PC_MaxRat     =       0.034907                  ! Maximum pitch  rate (in absolute value) in pitch  controller, rad/s.
+REAL(4), PARAMETER           :: PC_MinPit     =       -0.01396                  ! Minimum pitch setting in pitch controller, rad.
 REAL(4), PARAMETER           :: PC_RefSpd     =     64.1862                     ! Desired (reference) HSS speed for pitch controller, rad/s.
 REAL(4), SAVE                :: PitCom    (3)                                   ! Commanded pitch of each blade the last time the controller was called, rad.
 REAL(4)                      :: PitComI                                         ! Integral term of command pitch, rad.
