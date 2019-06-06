@@ -1,0 +1,1 @@
+/usr/local/bin/ifort -m64 -g -traceback -132 -r8 -DDOUBLE_PRECISION -DIMPLICIT_DLLEXPORT -O3 -dynamiclib -Wl,-headerpad_max_install_names  -o DISCON_Shutdown.dll -install_name @rpath/DISCON_Shutdown.dll CMakeFiles/DISCON_Shutdown.dir/DISCON_Shutdown.F90.o 

@@ -1,0 +1,1 @@
+/usr/local/bin/ifort -m64 -g -traceback -132 -r8 -DDOUBLE_PRECISION -DIMPLICIT_DLLEXPORT -O3 -dynamiclib -Wl,-headerpad_max_install_names  -o DISCON_ITIBarge.dll -install_name @rpath/DISCON_ITIBarge.dll CMakeFiles/DISCON_ITIBarge.dir/DISCON_ITIBarge.F90.o 

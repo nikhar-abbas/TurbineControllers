@@ -1,0 +1,1 @@
+/usr/local/bin/ifort -m64 -g -traceback -132 -r8 -DDOUBLE_PRECISION -DIMPLICIT_DLLEXPORT -O3 -dynamiclib -Wl,-headerpad_max_install_names  -o DISCON_OC3Hywind.dll -install_name @rpath/DISCON_OC3Hywind.dll CMakeFiles/DISCON_OC3Hywind.dir/DISCON_OC3Hywind.F90.o 
