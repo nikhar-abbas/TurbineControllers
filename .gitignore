@@ -4,3 +4,17 @@
 # Re-Generated Files that are silly to push #
 .DS_Store
 .DS_Store?
+
+# CMake Generated Files
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeFiles/*
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps

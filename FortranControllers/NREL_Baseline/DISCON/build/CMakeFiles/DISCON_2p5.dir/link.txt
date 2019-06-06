@@ -1,1 +1,0 @@
-/usr/local/bin/ifort -m64 -g -traceback -132 -r8 -DDOUBLE_PRECISION -DIMPLICIT_DLLEXPORT -O3 -dynamiclib -Wl,-headerpad_max_install_names  -o DISCON_2p5.dll -install_name @rpath/DISCON_2p5.dll CMakeFiles/DISCON_2p5.dir/DISCON_2p5.F90.o 
