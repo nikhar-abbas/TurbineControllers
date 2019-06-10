@@ -25,7 +25,7 @@ file(TO_CMAKE_PATH ${SOURCE_PATH} SOURCE_PATH)
 
 # set the build type option
 if (NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Release" CACHE STRING
+  set(CMAKE_BUILD_TYPE "Debug" CACHE STRING
     "Choose the build type: Debug Release" FORCE)
 endif (NOT CMAKE_BUILD_TYPE)
 

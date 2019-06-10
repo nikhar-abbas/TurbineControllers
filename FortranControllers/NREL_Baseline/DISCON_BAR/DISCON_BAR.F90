@@ -370,7 +370,6 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
 
    GenSpeedF = ( 1.0 - Alpha_HSS )*GenSpeed + Alpha_HSS*GenSpeedF
 
-
 !=======================================================================
    ! Region 2.5 smoothing. 
    ! Note: This method is adapted from methods developed by David Schlipf 
@@ -405,7 +404,7 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
 
 
    ! Apply (or don't) region 2.5 smoothing
-      IF (DelOmegaF > 0) THEN
+      IF (DelOmegaF > 0.0) THEN
          GenSpeedF_VS = GenSpeedF + DelOmegaF
       ELSE
          GenSpeedF_VS = GenSpeedF
@@ -467,7 +466,6 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
 
    ElapTime = Time - LastTimePC
 
-
    ! Only perform the control calculations if the elapsed time is greater than
    !   or equal to the communication interval of the pitch controller:
    ! NOTE: Time is scaled by OnePlusEps to ensure that the contoller is called
@@ -483,7 +481,7 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
       GK = 1.0/( 1.0 + PitCom(1)/PC_KK )
    
    ! Apply (or don't) region 2.5 smoothing
-      IF (DelOmegaF < 0) THEN
+      IF (DelOmegaF < 0.0) THEN
          GenSpeedF_PC = GenSpeedF + DelOmegaF
       ELSE
          GenSpeedF_PC = GenSpeedF
@@ -496,13 +494,11 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
       IntSpdErr = IntSpdErr + SpdErr*ElapTime                           ! Current integral of speed error w.r.t. time
       IntSpdErr = MIN( MAX( IntSpdErr, PC_MinPit/( GK*PC_KI ) ), &
                                        PC_MaxPit/( GK*PC_KI )      )    ! Saturate the integral term using the pitch angle limits, converted to integral speed error limits
-
    ! Compute the pitch commands associated with the proportional and integral
    !   gains:
 
       PitComP   = GK*PC_KP*   SpdErr                                    ! Proportional term
       PitComI   = GK*PC_KI*IntSpdErr                                    ! Integral term (saturated)
-
 
    ! Superimpose the individual commands to get the total pitch command;
    !   saturate the overall command using the pitch angle limits:
@@ -521,11 +517,14 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
          PitRate(K) = ( PitComT - BlPitch(K) )/ElapTime                 ! Pitch rate of blade K (unsaturated)
          PitRate(K) = MIN( MAX( PitRate(K), -PC_MaxRat ), PC_MaxRat )   ! Saturate the pitch rate of blade K using its maximum absolute value
          PitCom(K) = BlPitch(K) + PitRate(K)*ElapTime                  ! Saturate the overall command of blade K using the pitch rate limit
-         PitCom(K)  = MIN( MAX( PitCom(K), PC_MinPit ), PC_MaxPit )     ! Saturate the overall command using the pitch angle limits         
+         PitCom(K)  = MIN( MAX( PitCom(K), PC_MinPit), PC_MaxPit )     ! Saturate the overall command using the pitch angle limits         
          
       ENDDO          ! K - all blades
 
 
+      ! Print *, 'Elapsed Time = ', ElapTime
+      ! Print *, 'PitRate = ', PitRate(1)
+      ! Print *, 'Pitch Command = ', PitCom(1)
    ! Reset the value of LastTimePC to the current value:
 
       LastTimePC = Time
