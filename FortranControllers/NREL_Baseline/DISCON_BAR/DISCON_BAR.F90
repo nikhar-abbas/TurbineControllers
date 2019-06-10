@@ -102,7 +102,7 @@ REAL(4), SAVE                :: VS_SySp                                         
 REAL(4), SAVE                :: VS_TrGnSp                                       ! Transitional generator speed (HSS side) between regions 2 and 2 1/2, rad/s.
 
 ! Region 2.5 Smoothing Parameters
-Real(4), PARAMETER           :: GainBias_Mode = 0                               ! Gain Bias Mode, 0 = no gain bais, 1 = gain bias as defined by David Schlipf, -.
+Real(4), PARAMETER           :: GainBias_Mode = 1                               ! Gain Bias Mode, 0 = no gain bais, 1 = gain bias as defined by David Schlipf, -.
 Real(4), PARAMETER           :: VS_GainBias   = 30                              ! Variable speed torque controller gain bias, (rad/s)/(rad).
 Real(4), PARAMETER           :: PC_GainBias   = 0.0001                          ! Collective pitch controller gain bias, (rad/s)/(Nm).
 Real(4), PARAMETER           :: CornerFreq_GB = 0.1                             ! Cornering frequency of first order low pass filter for the gain bias signal, Hz.
@@ -514,17 +514,13 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
    !       blade.
 
       DO K = 1,NumBl ! Loop through all blades
-         PitRate(K) = ( PitComT - BlPitch(K) )/ElapTime                 ! Pitch rate of blade K (unsaturated)
+         PitRate(K) = ( PitComT - PitCom(K) )/ElapTime                 ! Pitch rate of blade K (unsaturated)
          PitRate(K) = MIN( MAX( PitRate(K), -PC_MaxRat ), PC_MaxRat )   ! Saturate the pitch rate of blade K using its maximum absolute value
-         PitCom(K) = BlPitch(K) + PitRate(K)*ElapTime                  ! Saturate the overall command of blade K using the pitch rate limit
+         PitCom(K) = PitCom(K) + PitRate(K)*ElapTime                  ! Saturate the overall command of blade K using the pitch rate limit
          PitCom(K)  = MIN( MAX( PitCom(K), PC_MinPit), PC_MaxPit )     ! Saturate the overall command using the pitch angle limits         
          
       ENDDO          ! K - all blades
 
-
-      ! Print *, 'Elapsed Time = ', ElapTime
-      ! Print *, 'PitRate = ', PitRate(1)
-      ! Print *, 'Pitch Command = ', PitCom(1)
    ! Reset the value of LastTimePC to the current value:
 
       LastTimePC = Time
