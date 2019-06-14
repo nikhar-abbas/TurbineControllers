@@ -2,7 +2,7 @@ function param = ControlParameters_NRELBaseline_BAR
 %Control parameters for BAR controller
 
 
-% Turbine and Environmental ParametersParameters
+% Turbine and Environmental Parameters
 param.J = 301086080.000 + 590.965098296*96.76^2;                            % Total Rotor Inertia, kg-m^2.
 param.RotorRad      = 103.1143;                                             % Rotor Radius, m.
 param.Ng            = 96.76;                                                % Gearbox Ratio, -.
