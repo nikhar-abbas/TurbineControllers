@@ -27,6 +27,9 @@ SUBROUTINE DISCON ( avrSWAP, aviFAIL, accINFILE, avcOUTNAME, avcMSG ) BIND (C, N
    ! DO NOT REMOVE or MODIFY LINES starting with "!DEC$" or "!GCC$"
    ! !DEC$ specifies attributes for IVF and !GCC$ specifies attributes for gfortran
    !
+   ! Further modified by N. Abbas to include a region 2.5 smoothing logic developed 
+   ! by sowento GmbH
+   !
    ! Note that gfortran v5.x on Mac produces compiler errors with the DLLEXPORT attribute,
    ! so I've added the compiler directive IMPLICIT_DLLEXPORT.
    
@@ -180,7 +183,7 @@ IF ( iStatus == 0 )  THEN  ! .TRUE. if we're on the first call to the DLL
               'wind turbine controller logic from DISCON.dll as originally '// &
               'written by J. Jonkman of NREL/NWTC. The logic has been modified ' // &
               'by Nikhar Abbas to include region 2.5 smoothing as developed by ' // &
-              'Sowento energy. The controller has been tuned for use on the BAR.'
+              'sowento GmbH. The controller has been tuned for use on the BAR.'
 
    ! Determine some torque control parameters not specified directly:
 
@@ -373,7 +376,7 @@ IF ( ( iStatus >= 0 ) .AND. ( aviFAIL >= 0 ) )  THEN  ! Only compute control cal
 !=======================================================================
    ! Region 2.5 smoothing. 
    ! Note: This method is adapted from methods developed by David Schlipf 
-   !       with Sowento energy. Any publications about this controller 
+   !       with sowento GmbH. Any publications about this controller 
    !       should give him credit, where credit is due. 
 
    IF ( GainBias_Mode == 1) THEN
