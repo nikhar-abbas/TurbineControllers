@@ -27,6 +27,9 @@ SUBROUTINE DISCON ( avrSWAP, aviFAIL, accINFILE, avcOUTNAME, avcMSG ) BIND (C, N
    ! DO NOT REMOVE or MODIFY LINES starting with "!DEC$" or "!GCC$"
    ! !DEC$ specifies attributes for IVF and !GCC$ specifies attributes for gfortran
    !
+   ! Further modified by N. Abbas to include a region 2.5 smoothing logic developed 
+   ! by Sowento Energy. 
+   !
    ! Note that gfortran v5.x on Mac produces compiler errors with the DLLEXPORT attribute,
    ! so I've added the compiler directive IMPLICIT_DLLEXPORT.
    
