@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.121"
+    ComputedModelVersion    "1.122"
     NumModelReferences	    0
     NumTestPointedSignals   4
     TestPointedSignal {
@@ -48,7 +48,13 @@ Model {
     IsExportFunctionModel   0
     IsArchitectureModel	    0
     NumParameterArguments   0
-    NumExternalFileReferences 2
+    NumExternalFileReferences 3
+    ExternalFileReference {
+      Reference		      "simulink/Logic and Bit\nOperations/Compare\nTo Zero"
+      Path		      "NREL_Baseline/Baseline Torque Controller/Compare To Zero1"
+      SID		      "269"
+      Type		      "LIBRARY_BLOCK"
+    }
     ExternalFileReference {
       Reference		      "simulink/Logic and Bit\nOperations/Compare\nTo Zero"
       Path		      "NREL_Baseline/Pitch_controller/Compare To Zero1"
@@ -120,21 +126,21 @@ Model {
 	}
 	Object {
 	  $ObjectID		  6
-	  IsActive		  [0]
+	  IsActive		  [1]
 	  ViewObjType		  "SimulinkTopLevel"
 	  LoadSaveID		  "0"
 	  Extents		  [1429.0, 918.0]
 	  ZoomFactor		  [0.79999999999999993]
-	  Offset		  [-732.533952423923, -245.94020242392173]
+	  Offset		  [-886.283952423923, -245.94020242392173]
 	}
 	Object {
 	  $ObjectID		  7
-	  IsActive		  [1]
+	  IsActive		  [0]
 	  ViewObjType		  "SimulinkSubsys"
 	  LoadSaveID		  "3"
 	  Extents		  [1429.0, 918.0]
-	  ZoomFactor		  [0.79999999999999993]
-	  Offset		  [-655.31765127469737, -410.62197589901427]
+	  ZoomFactor		  [1.2204081910426634]
+	  Offset		  [-354.87000914525333, -266.603670369379]
 	}
 	Object {
 	  $ObjectID		  8
@@ -180,9 +186,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "nabbas"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu May 30 13:20:05 2019"
-  RTWModifiedTimeStamp	  481123202
-  ModelVersionFormat	  "1.%<AutoIncrement:121>"
+  LastModifiedDate	  "Wed Jun 26 17:08:46 2019"
+  RTWModifiedTimeStamp	  483469719
+  ModelVersionFormat	  "1.%<AutoIncrement:122>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "disabled"
@@ -6679,7 +6685,6 @@ Model {
       Position		      [10, 111, 165, 184]
       ZOrder		      9
       BackgroundColor	      "green"
-      Commented		      "on"
       RequestExecContextInheritance off
       System {
 	Name			"Baseline Torque Controller"
@@ -7283,7 +7288,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"80"
+	ZoomFactor		"122"
 	SimulinkSubDomain	"Simulink"
 	Block {
 	  BlockType		  Inport
@@ -8650,7 +8655,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Pitch_controller"
-	Location		[187, 71, 1859, 1165]
+	Location		[143, 35, 1815, 1129]
 	Open			off
 	PortBlocksUseCompactNotation off
 	SetExecutionDomain	off
@@ -8711,7 +8716,7 @@ Model {
 	  Ports			  [1, 1]
 	  Position		  [-65, 235, -35, 265]
 	  ZOrder		  355
-	  LibraryVersion	  "1.444"
+	  LibraryVersion	  "1.453"
 	  SourceBlock		  "simulink/Logic and Bit\nOperations/Compare\nTo Zero"
 	  SourceType		  "Compare To Zero"
 	  SourceProductName	  "Simulink"
@@ -10615,10 +10620,9 @@ Model {
       }
     }
     Line {
-      ZOrder		      371
-      SrcBlock		      "Fixed Torque"
+      ZOrder		      372
+      SrcBlock		      "Baseline Torque Controller"
       SrcPort		      1
-      Points		      [199, 0; 0, 40]
       DstBlock		      "FAST Nonlinear Wind Turbine"
       DstPort		      1
     }
