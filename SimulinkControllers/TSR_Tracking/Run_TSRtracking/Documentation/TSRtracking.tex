@@ -1,0 +1,62 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage{soul}
+\definecolor{Red}{rgb}{1,0.0,0.0}
+\setulcolor{Red}
+\graphicspath{{./Figures/}}
+
+
+\begin{document}
+
+\title{Running TSR Tracking controller\\
+	\small A quick guide to running the TSR tracking that is in development using the MATLAB and Simulink tools I have implemented. }
+\author{Nikhar J. Abbas}
+
+\maketitle
+
+This short document should help get the TSR tracking controller Simulink model up and running smoothly. Hopefully the provided code is commented well enough to be self explanatory - but this document may help. As it stands, this controller does not have a wind speed estimator implemented and assumes a known wind speed.  
+
+\section*{The Files}
+There are a number of necessary files to run the controller, only a few of which will need to be changed with a change computer or turbine model, most will not. 
+\\ \\
+Files to be setup:
+\begin{itemize}
+\item Run\_TSRtracking.m
+\item Run\_ControlParameters\_TSR.m
+\end{itemize}
+Other files that must be in the path:
+\begin{itemize}
+\item TSR\_Tracking\_v2.mdl
+\item Pre\_FastMod.m
+\item Pre\_SimSetup.m
+\item Run\_ControlParameters
+\item An\_CpScan.m
+\item filt\_2lp\_D.m
+\item filt\_1lp\_D.m
+\item Post\_LoadOutlist.m
+\item Post\_LoadFastOut.m
+\end{itemize}
+And some plotting files I have thrown in:
+\begin{itemize}
+\item Pl\_FastPlots.m
+\item myplot.m
+\end{itemize}
+
+\section*{Running the controller}
+Two files need to be set up. \textit{Run\_TSRtracking.m} is the primary file that runs all of the other files. Some paths to the controller, the turbine model, and the CpSurface will need to be defined, that should be it. Perhaps more importantly, \textit{Run\_ControlParameters\_TSR.m} needs to be set up. This is where all of the necessary turbine parameters should be implemented. Currently, some natural frequencies (i.e. Drivetrain natural frequency) are hard coded. This can be pulled from Openfast files in the final form. Otherwise, everything should be fairly straight forward in this file. 
+
+The output of the controller will be put into a data structure called "simout" in the MATLAB workspace. The contents of this structure can be easily plotted using \textit{Pl\_FastPlots.m}. Opening this file provides a number of flags to edit or create specific plots made. 
+
+\section*{The Cp-Surface}
+The Cp-surface is an integral part of the gain calculations for this controller. A fairly straightforward process is outlined in \textit{An\_CpScan.m}. Once this is run, a file is saved that contains the Cp-Surface data that is necessary. Once a *.mat file is produced using \textit{An\_CpScan.m}, the path to this file must be defined in \textit{Run\_TSRtracking.m}.
+
+\section*{Other Notes}
+As mentioned previously, the current version of this controller assumes a known wind signal. The next version will implement a wind speed estimator. This has not yet been tested on turbines other than the DTU-10MW turbine. Hopefully the control parameters ($\zeta$ and $\omega_n$) don't need to change to have a functioning controller for other turbines, but maybe some more extensive thought into how these should be defined is necessary. 
+
+
+\end{document}

@@ -1,9 +1,25 @@
 # Have git ignore some files #
 
+# Miscellanious
+*.zip 
 
 # Re-Generated Files that are silly to push #
 .DS_Store
 .DS_Store?
+
+# MATLAB Generated files
+*.original
+*.slxc
+*slprj*
+*.slx.r20*
+
+# Latex Generated Files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
+*.toc
 
 # CMake Generated Files
 CMakeLists.txt.user
