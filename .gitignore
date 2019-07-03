@@ -12,6 +12,7 @@
 *.slxc
 *slprj*
 *.slx.r20*
+*.autosave
 
 # Latex Generated Files
 *.aux

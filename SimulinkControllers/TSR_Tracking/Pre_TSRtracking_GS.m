@@ -156,11 +156,21 @@ pKi_vs = Ki_vs;
 
 % ------ Blade Pitch Controller ------
 % Plant Linearization Points
-Bop_pc = find(Beta_op>0);
+Bop_pc = find(Beta_op>0 * pi/180);
 Apc = A(Bop_pc(1):end);
 Bb_pc = Bb(Bop_pc(1):end);
 Betaop_pc = Beta_op(Bop_pc(1):end);
 vv_pc = vv(Bop_pc(1):end);
+
+% Desired behavior
+PC_zeta = ContParam.PC_zeta;
+PC_om_n = ContParam.PC_om_n;
+
+% Linear fit for Apc w.r.t. beta
+pApc = polyfit(Betaop_pc,Apc,1);
+pBb_pc = polyfit(Betaop_pc,Bb_pc,1);
+Apc_f = pApc(1)*Betaop_pc + pApc(2);
+Bb_pc_f = pBb_pc(1)*Betaop_pc + pBb_pc(2);
 
 % Linear fit for Apc w.r.t. v
 pApc = polyfit(vv_pc,Apc,1);
@@ -168,21 +178,19 @@ pBb_pc = polyfit(vv_pc,Bb_pc,1);
 Apc_f = pApc(1)*vv_pc + pApc(2);
 Bb_pc_f = pBb_pc(1)*vv_pc + pBb_pc(2);
 
-% Desired behavior
-PC_zeta = ContParam.PC_zeta;
-PC_om_n = ContParam.PC_om_n;
-
 % Blade Pitch Gains, as a function of v or related beta
 Kp_pc = 1./Bb_pc_f .* (2*PC_zeta*PC_om_n + Apc_f);
 Ki_pc = PC_om_n^2./Bb_pc_f ;
 
-% Linear fit, as a function of v
-pKp_pc = polyfit(vv_pc,Kp_pc,1);
-pKi_pc = polyfit(vv_pc,Ki_pc,1);
+% Linear fit, as a function of beta
+pKp_pc = polyfit(Betaop_pc,Kp_pc,1);
+pKi_pc = polyfit(Betaop_pc,Ki_pc,1);
 
-% % Linear fit, as a function of beta
-% pKp_pc = polyfit(Betaop_pc,Kp_pc,1);
-% pKi_pc = polyfit(Betaop_pc,Ki_pc,1);
+% % Linear fit, as a function of v
+% pKp_pc = polyfit(vv_pc,Kp_pc,1);
+% pKi_pc = polyfit(vv_pc,Ki_pc,1);
+
+
 
 % ----- Save -----
 GS.pKp_vs = pKp_vs;

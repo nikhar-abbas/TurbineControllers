@@ -38,7 +38,7 @@ FAST_InputFileName = [ModDir filesep ElastoName];
 fid = fopen(FAST_InputFileName);
 
 % Define Parameters to load
-params = {'BlPitch(1)', 'BlPitch(2)', 'BlPitch(3)'};
+params = {'BlPitch(1)', 'BlPitch(2)', 'BlPitch(3)', 'RotSpeed'};
 
 % Load data into output structure
 i = 1;
