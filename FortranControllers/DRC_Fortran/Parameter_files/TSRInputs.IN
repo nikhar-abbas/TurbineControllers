@@ -1,0 +1,45 @@
+! Control parameters input file for TSR_Tracking Controller
+! These parameters are specific for the NREL 5MW (fixed bottom) controller
+
+! Turbine and Environmental ParametersParameters
+38677590.116     ! J 			- Total Rotor Inertia, kg-m^2.
+63               ! RotorRad 	- Rotor Radius, m.
+97               ! GBRatio 		- Gearbox Ratio, -.
+100              ! GenEff 		- Generator Efficiency, 1/!
+1.2671     		 ! RRSpeed 		- Rated Rotor Speed, rad/s.
+1.225            ! rho 			- Air Density, kg/m^3.
+
+! Filter Cornering Frequencies
+3.38925    		! Corner frequency in the recursive, second order low pass filter of the HSS Speed, Hz. -- Chosen to be 3/4 of the first drivetrain natural frequency
+0.5            	! Corner frequency for Wind Speed Filt, Hz. -- (Currently arbitrary)
+0.1           	! Corner frequeny for Gain Bias Filter, Hz. -- (Currently arbitrary)
+
+! Variable Speed Torque Controller Parameters
+1    			! VS_zeta 		- Damping constant, --
+0.2  			! VS_om_n 		- Natural frequency, Hz. -- Time constant chosen to be on third the rotor frequency at rated. 
+
+! Blade Pitch Controller Parameters
+0.7             ! PC_zeta		- Damping constant, --
+0.6             ! PC_om_n		- Natural frequency, Hz.
+
+! Region 2.5 Gain Bias
+20 				! VS_GainBias   - VS Controller Bias Gian for Region 2.5 smoothing, -.
+.0002 			! PC_GainBias   - Pitch Controller Bias Gian for Region 2.5 smoothing, -.
+
+! Pitch Controller Setpoints
+1.5708      	! PC_MaxPit		- Maximum pitch setting in pitch controller, rad.
+0.1745      	! PC_MaxRat		- Maximum pitch  rate (in absolute value) in pitch  controller, rad/s.
+0        		! PC_MinPit		- Minimum pitch setting in pitch controller, rad.
+122.9096    	! PC_RefSpd		- Desired (reference) HSS speed for pitch controller, rad/s.
+11.4			! PC_Vrated		- Rated wind speed, m/s.
+25          	! PC_Vmax		- Maximum wind speed, m/s.
+
+! Variable Speed Torque Controller setpoints
+15000.0     	! VS_MaxRat		- Maximum torque rate (in absolute value) in torque controller, N-m/s.
+0.0349	    	! VS_Rgn3MP		- Minimum pitch angle at which the torque is computed as if we are in region 3 regardless of the generator speed, rad. -- chosen to be 1.0 degree above PC_MinPit
+122.9096    	! VS_RtGnSp		- Rated generator speed (HSS side), rad/s. 
+5000000.0   	! VS_RtPwr		- Rated generator generator power in Region 3, Watts. -- chosen to be 5MW divided by the electrical generator efficiency of 100
+40680 			! VS_RatedTq	- Rated generator torque in Region 3 (HSS side), N-m.
+4.4748      	! VS_MaxTq		- Maximum generator torque in Region 3 (HSS side), N-m. -- chosen to be 1.1*VS_RatedTq
+0.7226      	! VS_MinSpd		- Minimum rotor speed (rad/s)
+3           	! VS_Vmin		- Minimum wind speed, m/s
