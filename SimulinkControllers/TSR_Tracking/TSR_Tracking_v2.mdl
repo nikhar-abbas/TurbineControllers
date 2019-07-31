@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.1471"
+    ComputedModelVersion    "1.1481"
     NumModelReferences	    0
     NumTestPointedSignals   5
     TestPointedSignal {
@@ -88,7 +88,7 @@ Model {
   DiagnosticSuppressor	  "on"
   LogicAnalyzerPlugin	  "on"
   LogicAnalyzerSignalOrdering "99768b01-3e28-48ea-bf57-afab4791ffe6,d4511a98-24d3-4d87-bb94-e9a705603039,f2ea36af-0906"
-  "-46df-8262-c367adbe0c95,dc98d8dd-781a-41dc-8437-00553e037bc6,4c23f5ef-dd1f-4cc4-b492-3ac34ce84ef2"
+  "-46df-8262-c367adbe0c95,4c23f5ef-dd1f-4cc4-b492-3ac34ce84ef2,dc98d8dd-781a-41dc-8437-00553e037bc6"
   NotesPlugin		  "on"
   EnableAccessToBaseWorkspace on
   ScopeRefreshTime	  0.035000
@@ -164,8 +164,8 @@ Model {
 	  ViewObjType		  "SimulinkSubsys"
 	  LoadSaveID		  "376"
 	  Extents		  [1379.0, 653.0]
-	  ZoomFactor		  [0.8]
-	  Offset		  [-287.56938925698705, -51.750000000000114]
+	  ZoomFactor		  [1.0]
+	  Offset		  [-115.19438925698705, 29.874999999999886]
 	}
 	Object {
 	  $ObjectID		  9
@@ -222,9 +222,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "nabbas"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jul 25 12:18:28 2019"
-  RTWModifiedTimeStamp	  485957906
-  ModelVersionFormat	  "1.%<AutoIncrement:1471>"
+  LastModifiedDate	  "Wed Jul 31 11:36:45 2019"
+  RTWModifiedTimeStamp	  486473803
+  ModelVersionFormat	  "1.%<AutoIncrement:1481>"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
   LibraryLinkDisplay	  "disabled"
@@ -13916,7 +13916,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"80"
+	ZoomFactor		"100"
 	SimulinkSubDomain	"Simulink"
 	Block {
 	  BlockType		  Inport
@@ -14354,7 +14354,7 @@ Model {
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "48"
+	    SIDHighWatermark	    "50"
 	    SimulinkSubDomain	    "Simulink"
 	    Block {
 	      BlockType		      Inport
@@ -14379,7 +14379,7 @@ Model {
 	      SID		      "396::46"
 	      Tag		      "Stateflow S-Function TSR_Tracking_v2 6"
 	      Ports		      [1, 5]
-	      Position		      [180, 100, 230, 220]
+	      Position		      [180, 110, 230, 230]
 	      ZOrder		      25
 	      FunctionName	      "sf_sfun"
 	      Parameters	      "ContParam"
@@ -14431,23 +14431,23 @@ Model {
 	    Block {
 	      BlockType		      Outport
 	      Name		      "Aop"
-	      SID		      "396::24"
+	      SID		      "396::49"
 	      Position		      [460, 171, 480, 189]
-	      ZOrder		      15
+	      ZOrder		      28
 	      Port		      "3"
 	      IconDisplay	      "Port number"
 	    }
 	    Block {
 	      BlockType		      Outport
 	      Name		      "B_bop"
-	      SID		      "396::36"
+	      SID		      "396::50"
 	      Position		      [460, 206, 480, 224]
-	      ZOrder		      21
+	      ZOrder		      29
 	      Port		      "4"
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      ZOrder		      270
+	      ZOrder		      305
 	      SrcBlock		      "Beta"
 	      SrcPort		      1
 	      DstBlock		      " SFunction "
@@ -14455,17 +14455,16 @@ Model {
 	    }
 	    Line {
 	      Name		      "Ki"
-	      ZOrder		      271
+	      ZOrder		      306
 	      Labels		      [0, 0]
 	      SrcBlock		      " SFunction "
 	      SrcPort		      2
-	      Points		      [0, -25]
 	      DstBlock		      "Ki"
 	      DstPort		      1
 	    }
 	    Line {
 	      Name		      "Kp"
-	      ZOrder		      272
+	      ZOrder		      307
 	      Labels		      [0, 0]
 	      SrcBlock		      " SFunction "
 	      SrcPort		      3
@@ -14474,16 +14473,17 @@ Model {
 	    }
 	    Line {
 	      Name		      "Aop"
-	      ZOrder		      273
+	      ZOrder		      308
 	      Labels		      [0, 0]
 	      SrcBlock		      " SFunction "
 	      SrcPort		      4
+	      Points		      [0, -15]
 	      DstBlock		      "Aop"
 	      DstPort		      1
 	    }
 	    Line {
 	      Name		      "B_bop"
-	      ZOrder		      274
+	      ZOrder		      309
 	      Labels		      [0, 0]
 	      SrcBlock		      " SFunction "
 	      SrcPort		      5
@@ -14491,14 +14491,14 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      275
+	      ZOrder		      310
 	      SrcBlock		      " Demux "
 	      SrcPort		      1
 	      DstBlock		      " Terminator "
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      276
+	      ZOrder		      311
 	      SrcBlock		      " SFunction "
 	      SrcPort		      1
 	      DstBlock		      " Demux "
@@ -14816,7 +14816,7 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  23
+	  ZOrder		  427
 	  SrcBlock		  "MATLAB Function"
 	  SrcPort		  3
 	  DstBlock		  "Mux"
@@ -14864,14 +14864,6 @@ Model {
 	      DstPort		      1
 	    }
 	  }
-	}
-	Line {
-	  ZOrder		  43
-	  SrcBlock		  "MATLAB Function"
-	  SrcPort		  4
-	  Points		  [132, 0; 0, 60]
-	  DstBlock		  "Mux"
-	  DstPort		  5
 	}
 	Line {
 	  ZOrder		  51
@@ -14985,6 +14977,14 @@ Model {
 	  SrcPort		  1
 	  DstBlock		  "Saturate BldPitch"
 	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  429
+	  SrcBlock		  "MATLAB Function"
+	  SrcPort		  4
+	  Points		  [72, 0; 0, 60]
+	  DstBlock		  "Mux"
+	  DstPort		  5
 	}
 	Annotation {
 	  SID			  "612"
@@ -17180,7 +17180,7 @@ Model {
 	      Position		      [180, 102, 230, 203]
 	      ZOrder		      18
 	      FunctionName	      "sf_sfun"
-	      Parameters	      "Avec,ContParam"
+	      Parameters	      "ContParam"
 	      PortCounts	      "[1 4]"
 	      SFunctionDeploymentMode off
 	      EnableBusSupport	      on
@@ -18817,7 +18817,7 @@ Stateflow {
     id			    1
     name		    "TSR_Tracking_v2"
     sfVersion		    80000015
-    firstTarget		    42
+    firstTarget		    41
   }
   chart {
     id			    2
@@ -18828,6 +18828,7 @@ Stateflow {
     screen		    [1 1 3600 1200 1.180555555555556]
     treeNode		    [0 3 0 0]
     viewObj		    2
+    visible		    1
     ssIdHighWaterMark	    17
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -19248,7 +19249,10 @@ Stateflow {
     screen		    [1 1 3600 1200 1.180555555555556]
     treeNode		    [0 21 0 0]
     viewObj		    20
-    ssIdHighWaterMark	    28
+    visible		    1
+    subviewS {
+    }
+    ssIdHighWaterMark	    30
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
     chartFileNumber	    6
@@ -19279,10 +19283,13 @@ Stateflow {
       "nSchedule(Beta, ContParam)\n\n% This function calculates the current gains for a Collective Blade Pitch \n% cont"
       "roller\n%\n% Inputs: v - Current wind speed estimate, m/s.\n%         ContParam - Structure of control parameter"
       "s, output from\n%                     ControlParameters.m\n%\n% Outputs: Kp - Proportional Gain\n%          Ki -"
-      " Integral Gain\n%\n% Nikhar Abbas - May 2019\n\n\n%% Gain Schedule\npKp_pc = ContParam.GS.pKp_pc;\npKi_pc = Cont"
-      "Param.GS.pKi_pc;\n\n%%\nKp = pKp_pc(1)*Beta + pKp_pc(2);\nKi = pKi_pc(1)*Beta + pKi_pc(2);\n% Kp = pKp_pc(1)*v +"
-      " pKp_pc(2)\n% Ki = pKi_pc(1)*v + pKi_pc(2);\n\nKpmax = pKp_pc(1)*15*pi/180 + pKp_pc(2);\nKimax = pKi_pc(1)*15*pi"
-      "/180 + pKi_pc(2);\n\nKp = min(Kp, Kpmax);\nKi = min(Ki,Kimax);\n\nAop=0;\nB_bop=0;\n\n\nend\n\n"
+      " Integral Gain\n%\n% Nikhar Abbas - May 2019\n\n\n%% Linear Gain Schedule\n% pKp_pc = ContParam.GS.pKp_pc;\n% pK"
+      "i_pc = ContParam.GS.pKi_pc;\n% \n% %%\n% Kp = pKp_pc(1)*Beta + pKp_pc(2);\n% Ki = pKi_pc(1)*Beta + pKi_pc(2);\n%"
+      " % Kp = pKp_pc(1)*v + pKp_pc(2)\n% % Ki = pKi_pc(1)*v + pKi_pc(2);\n% \n% Kpmax = pKp_pc(1)*15*pi/180 + pKp_pc(2"
+      ");\n% Kimax = pKi_pc(1)*15*pi/180 + pKi_pc(2);\n% \n% Kp = min(Kp, Kpmax);\n% Ki = min(Ki,Kimax);\n\n%% nonlinea"
+      "r Gain Schedule\nKp_pc = ContParam.GS.Kp_pc;\nKi_pc = ContParam.GS.Ki_pc;\nPC_beta = ContParam.GS.PC_beta;\nbeta"
+      " = max(min(Beta,PC_beta(end)), PC_beta(1));\n\n% gains\nKp = interp1(PC_beta,Kp_pc, beta);\nKi = interp1(PC_beta"
+      ",Ki_pc, beta);\n\n%% Remove this\nAop=0;\nB_bop=0;\n\n\nend\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -19363,14 +19370,13 @@ Stateflow {
   }
   data {
     id			    25
-    ssIdNumber		    8
-    name		    "Aop"
-    scope		    OUTPUT_DATA
+    ssIdNumber		    26
+    name		    "ContParam"
+    scope		    PARAMETER_DATA
     machine		    1
     props {
       array {
 	size			"-1"
-	isDynamic		1
       }
       type {
 	method			SF_INHERITED_TYPE
@@ -19379,7 +19385,7 @@ Stateflow {
 	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
+      frame		      SF_FRAME_INHERITED
       unit {
 	name			"inherit"
       }
@@ -19389,8 +19395,8 @@ Stateflow {
   }
   data {
     id			    26
-    ssIdNumber		    19
-    name		    "B_bop"
+    ssIdNumber		    29
+    name		    "Aop"
     scope		    OUTPUT_DATA
     machine		    1
     props {
@@ -19414,9 +19420,9 @@ Stateflow {
   }
   data {
     id			    27
-    ssIdNumber		    26
-    name		    "ContParam"
-    scope		    PARAMETER_DATA
+    ssIdNumber		    30
+    name		    "B_bop"
+    scope		    OUTPUT_DATA
     machine		    1
     props {
       array {
@@ -19429,7 +19435,7 @@ Stateflow {
 	wordLength		"16"
       }
       complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
+      frame		      SF_FRAME_NO
       unit {
 	name			"inherit"
       }
@@ -19485,6 +19491,9 @@ Stateflow {
     screen		    [1 1 3600 1200 1.180555555555556]
     treeNode		    [0 32 0 0]
     viewObj		    31
+    visible		    1
+    subviewS {
+    }
     ssIdHighWaterMark	    16
     decomposition	    CLUSTER_CHART
     type		    EML_CHART
@@ -19495,8 +19504,8 @@ Stateflow {
     }
     supportVariableSizing   0
     firstData		    33
-    firstTransition	    40
-    firstJunction	    39
+    firstTransition	    39
+    firstJunction	    38
   }
   state {
     id			    32
@@ -19512,18 +19521,15 @@ Stateflow {
     decomposition	    CLUSTER_STATE
     eml {
       isEML		      1
-      script		      "function [Ki, Kp, Aop] = GainSchedule(v,ContParam, Avec)\n% This function calculates the gains fo"
-      "r a variable speed torque controller\n% for the DTU 10MW Wind Turbine\n%\n% Inputs: v - estimated wind speed (m/"
-      "s)\n%         omega - Generator Speed (rad/s)\n%         ContParam = Control parameters - from ControlParameters"
-      "_TSR.m\n%         Avec - Vector of system poles - from Pre_TSRtracking_Plant.m\n\n% Outputs: Kp - Proportional G"
-      "ain\n%          Ki - Integral Gain\n%          Aop - Saturated system pole\n%\n% Nikhar Abbas - May 2019\n\n%% G"
-      "ain Schedule\npKp_vs = ContParam.GS.pKp_vs;\npKi_vs = ContParam.GS.pKi_vs;\n\nKp = pKp_vs(1)*v + pKp_vs(2);\nKi "
-      "= pKi_vs;\n\n\nAop=0;\n\n%% Load Turbine Parameters\n% Vmin = ContParam.VS_Vmin;\n% Vmax = ContParam.PC_Vmax;\n%"
-      " Vvec = linspace(Vmin,Vmax,length(Avec));           % Operational Wind Speeds\n% \n% \n% %% Linearized Plant Ope"
-      "rating Point\n% % Saturate Wind Speed\n% Vop = max( min(v,Vmax),Vmin);\n% \n% % System Dynamics\n% Aop = interp1"
-      "(Vvec,Avec,Vop);\n% B_vs = -ContParam.GBRatio^2/ContParam.J;\n% \n% \n% %% Controller Tuning \n% % Desired behav"
-      "ior\n% VS_zeta = ContParam.VS_zeta;\n% VS_om_n = ContParam.VS_om_n;\n% \n% % Gains\n% Kp = 1/B_vs * (2*VS_zeta*V"
-      "S_om_n + Aop);\n% Ki = VS_om_n^2/B_vs ;\nend\n\n"
+      script		      "function [Ki, Kp, Aop] = GainSchedule(v,ContParam)\n% This function calculates the gains for a va"
+      "riable speed torque controller\n% for the DTU 10MW Wind Turbine\n%\n% Inputs: v - estimated wind speed (m/s)\n% "
+      "        omega - Generator Speed (rad/s)\n%         ContParam = Control parameters - from ControlParameters_TSR.m"
+      "\n%         Avec - Vector of system poles - from Pre_TSRtracking_Plant.m\n\n% Outputs: Kp - Proportional Gain\n%"
+      "          Ki - Integral Gain\n%          Aop - Saturated system pole\n%\n% Nikhar Abbas - May 2019\n\n%% Linear "
+      "Gain Schedule\n% pKp_vs = ContParam.GS.pKp_vs;\n% pKi_vs = ContParam.GS.pKi_vs;\n% \n% Kp = pKp_vs(1)*v + pKp_vs"
+      "(2);\n% Ki = pKi_vs;\n% \n% \n% Aop=0;\n\n%% NonLinear Gain Schedule\nKp_vs = ContParam.GS.Kp_vs;\nKi_vs = ContP"
+      "aram.GS.Ki_vs;\nvs_v = ContParam.GS.VS_vv;\nv = max(min(v,vs_v(end)), vs_v(1));\n\n% gains\nKp = interp1(vs_v,Kp"
+      "_vs, v);\nKi = interp1(vs_v,Ki_vs, v);\n\nAop=0;\n\n\nend\n\n"
       editorLayout	      "100 M4x1[10 5 700 500]"
     }
   }
@@ -19580,7 +19586,6 @@ Stateflow {
     ssIdNumber		    13
     name		    "ContParam"
     scope		    PARAMETER_DATA
-    paramIndexForInitFromWorkspace 1
     machine		    1
     props {
       array {
@@ -19650,35 +19655,10 @@ Stateflow {
       }
     }
     dataType		    "Inherit: Same as Simulink"
-    linkNode		    [31 36 38]
-  }
-  data {
-    id			    38
-    ssIdNumber		    7
-    name		    "Avec"
-    scope		    PARAMETER_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-      unit {
-	name			"inherit"
-      }
-    }
-    dataType		    "Inherit: Same as Simulink"
-    linkNode		    [31 37 0]
+    linkNode		    [31 36 0]
   }
   junction {
-    id			    39
+    id			    38
     position		    [23.5747 49.5747 7]
     chart		    31
     subviewer		    31
@@ -19687,7 +19667,7 @@ Stateflow {
     linkNode		    [31 0 0]
   }
   transition {
-    id			    40
+    id			    39
     labelString		    "{eML_blk_kernel();}"
     labelPosition	    [28.125 13.875 102.544 14.964]
     fontSize		    12
@@ -19695,7 +19675,7 @@ Stateflow {
       intersection	      [0 0 1 0 23.5747 14.625 0 0]
     }
     dst {
-      id		      39
+      id		      38
       intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
     }
     midPoint		    [23.5747 24.9468]
@@ -19711,13 +19691,13 @@ Stateflow {
     linkNode		    [31 0 0]
   }
   instance {
-    id			    41
+    id			    40
     machine		    1
     name		    "Torque Controller/MATLAB Function1"
     chart		    31
   }
   target {
-    id			    42
+    id			    41
     machine		    1
     name		    "sfun"
     description		    "Default Simulink S-Function Target."

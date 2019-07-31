@@ -146,8 +146,10 @@ Avs_f = pAvs(1)*vv_vs + pAvs(2);
 VS_zeta = ContParam.VS_zeta;
 VS_om_n = ContParam.VS_om_n;
 
-% Torque Controller Gains, as a function of v
-Kp_vs = 1/Bvs * (2*VS_zeta*VS_om_n + Avs_f);
+% % Torque Controller Gains, as a function of linearized v
+% Kp_vs = 1/Bvs * (2*VS_zeta*VS_om_n + Avs_f);
+% Ki_vs = VS_om_n^2/Bvs;
+Kp_vs = 1/Bvs * (2*VS_zeta*VS_om_n + Avs);
 Ki_vs = VS_om_n^2/Bvs;
 
 % Linear fit for Kp_vs w.r.t. v
@@ -157,10 +159,10 @@ pKi_vs = Ki_vs;
 % ------ Blade Pitch Controller ------
 % Plant Linearization Points
 Bop_pc = find(Beta_op>0 * pi/180);
-Apc = A(Bop_pc(1)-1:end);
-Bb_pc = Bb(Bop_pc(1)-1:end);
-Betaop_pc = Beta_op(Bop_pc(1)-1:end);
-vv_pc = vv(Bop_pc(1)-1:end);
+Apc = A(Bop_pc(1):end);
+Bb_pc = Bb(Bop_pc(1):end);
+Betaop_pc = Beta_op(Bop_pc(1):end);
+vv_pc = vv(Bop_pc(1):end);
 
 % Desired behavior
 PC_zeta = ContParam.PC_zeta;
@@ -178,9 +180,11 @@ pBb_pc = polyfit(vv_pc,Bb_pc,1);
 Apc_f = pApc(1)*vv_pc + pApc(2);
 Bb_pc_f = pBb_pc(1)*vv_pc + pBb_pc(2);
 
-% Blade Pitch Gains, as a function of v or related beta
+% % Blade Pitch Gains, as a function of linearized v or related beta
 Kp_pc = 1./Bb_pc_f .* (2*PC_zeta*PC_om_n + Apc_f);
 Ki_pc = PC_om_n^2./Bb_pc_f ;
+% Kp_pc = 1./Bb_pc .* (2*PC_zeta*PC_om_n + Apc);
+% Ki_pc = PC_om_n^2./Bb_pc ;
 
 % Linear fit, as a function of beta
 pKp_pc = polyfit(Betaop_pc,Kp_pc,1);
@@ -193,12 +197,17 @@ pKi_pc = polyfit(Betaop_pc,Ki_pc,1);
 
 
 % ----- Save -----
-GS.pKp_vs = pKp_vs;
-GS.pKi_vs = pKi_vs;
-GS.pKp_pc = pKp_pc;
-GS.pKi_pc = pKi_pc;
+% GS.pKp_vs = pKp_vs;
+% GS.pKi_vs = pKi_vs;
+% GS.pKp_pc = pKp_pc;
+% GS.pKi_pc = pKi_pc;
+GS.Kp_vs = Kp_vs;
+GS.Ki_vs = Ki_vs*ones(1,length(Kp_vs));
+GS.Kp_pc = Kp_pc;
+GS.Ki_pc = Ki_pc;
 GS.pA = polyfit(vv,A,1);
-
+GS.VS_vv = vv_vs; 
+GS.PC_beta = Betaop_pc;
 % %% Gain Schedule
 % 
 % % ----- Generator torque controller -----

@@ -13,6 +13,7 @@
 *slprj*
 *.slx.r20*
 *.autosave
+*.m~
 
 # Latex Generated Files
 *.aux
