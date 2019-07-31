@@ -157,10 +157,10 @@ pKi_vs = Ki_vs;
 % ------ Blade Pitch Controller ------
 % Plant Linearization Points
 Bop_pc = find(Beta_op>0 * pi/180);
-Apc = A(Bop_pc(1):end);
-Bb_pc = Bb(Bop_pc(1):end);
-Betaop_pc = Beta_op(Bop_pc(1):end);
-vv_pc = vv(Bop_pc(1):end);
+Apc = A(Bop_pc(1)-1:end);
+Bb_pc = Bb(Bop_pc(1)-1:end);
+Betaop_pc = Beta_op(Bop_pc(1)-1:end);
+vv_pc = vv(Bop_pc(1)-1:end);
 
 % Desired behavior
 PC_zeta = ContParam.PC_zeta;
@@ -197,7 +197,7 @@ GS.pKp_vs = pKp_vs;
 GS.pKi_vs = pKi_vs;
 GS.pKp_pc = pKp_pc;
 GS.pKi_pc = pKi_pc;
-
+GS.pA = polyfit(vv,A,1);
 
 % %% Gain Schedule
 % 

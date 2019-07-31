@@ -1,4 +1,4 @@
-function [A,Bb,Beta_op,vv] = Pre_TSRtracking_Plant(ContParam,cpscan)
+function [A,Bb,Beta_op,vv,Cp] = Pre_TSRtracking_Plant(ContParam,cpscan)
 % This function finds the linearized plant parameters for a specific
 % turbine. In below rated operation, the plant is linearized about the
 % optimal tip-speed ratio. In above rated, the plant is linearized about

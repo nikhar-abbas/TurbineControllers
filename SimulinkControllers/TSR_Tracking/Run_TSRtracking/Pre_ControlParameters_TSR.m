@@ -1,4 +1,4 @@
-function param = Pre_ControlParameters_TSR
+function param = Pre_ContParam_TSR_DTU10MW
 % Control parameters input file for TSR_Tracking_*.mdl
 %
 % These parameters are specific for the DTU 10MW (fixed bottom) controller
