@@ -1,0 +1,29 @@
+! ----- This file contains the parameter input file for the DISCON style controller. It must follow this structure, and should be commented better once I learn how this actually works....
+! ---------- General Filters ----------
+0.25            ! CornerFreq_HSS - Corner frequency (-3dB point) in the recursive, single-pole, low-pass filter, Hz. -- !! NJA: Not yet: chosen to be 1/4 the blade edgewise natural frequency ( 1/4 of approx. 1Hz = 0.25Hz = 1.570796rad/s)
+! ---------- Pitch Controller ----------
+0.000125        ! PC_DT          - NJA: Maybe can get rid of this - Communication interval for pitch  controller, sec.
+0.00216s8       ! PC_KI          - Integral gain for pitch controller at rated pitch (zero), (-).
+0.366519        ! PC_KK          - Pitch angle where the the derivative of the aerodynamic power w.r.t. pitch has increased by a factor of two relative to the derivative at rated pitch (zero), rad.
+0.007226        ! PC_KP          - Proportional gain for pitch controller at rated pitch (zero), sec.
+1.570796        ! PC_MaxPit      - Maximum pitch setting in pitch controller, rad.
+0.034907        ! PC_MaxRat      - Maximum pitch  rate (in absolute value) in pitch  controller, rad/s.
+-0.01396        ! PC_MinPit      - Minimum pitch setting in pitch controller, rad.
+64.1862         ! PC_RefSpd      - Desired (reference) HSS speed for pitch controller, rad/s.
+! ---------- VS Torque Controller ----------
+0.000125        ! VS_DT          - Communication interval for torque controller, sec.
+10.47198        ! VS_CtInSp      - Transitional generator speed (HSS side) between regions 1 and 1 1/2, rad/s.
+1500000         ! VS_MaxRat      - Maximum torque rate (in absolute value) in torque controller, N-m/s.
+90771.92        ! VS_MaxTq       - Maximum generator torque in Region 3 (HSS side), N-m. -- chosen to be 10% above VS_RtTq      = 000000.0 = 43.09355kNm
+82519.45        ! VS_RtTq        - Rated generator torque, Nm.
+17.48594        ! VS_Rgn2K       - Generator torque constant in Region 2 (HSS side), N-m/(rad/s)^2.
+15.70796        ! VS_Rgn2Sp      - Transitional generator speed (HSS side) between regions 1 1/2 and 2, rad/s.
+0.017453        ! VS_Rgn3MP      - Minimum pitch angle at which the torque is computed as if we are in region 3 regardless of the generator speed, rad. -- chosen to be 1.0 degree above PC_MinPit
+64.1862         ! VS_RtGnSp      - Rated generator speed (HSS side), rad/s. -- Currently chosen to be 100% of PC_RefSpd
+5296610.17      ! VS_RtPwr       - Rated generator generator power in Region 3, Watts. -- chosen to be 5MW divided by the electrical generator efficiency of 94.4%
+15.0.           ! VS_SlPc        - Rated generator slip percentage in Region 2 1/2, %.
+! ---------- Region 2.5 Smoothing ----------
+1               ! GainBias_Mode  - Gain Bias Mode, 0 = no gain bais, 1 = gain bias as defined by David Schlipf, -.
+30              ! VS_GainBias    - Variable speed torque controller gain bias, (rad/s)/(rad).
+0.0001          ! PC_GainBias    - Collective pitch controller gain bias, (rad/s)/(Nm).
+0.1             ! CornerFreq_GB  - Cornering frequency of first order low pass filter for the gain bias signal, Hz.

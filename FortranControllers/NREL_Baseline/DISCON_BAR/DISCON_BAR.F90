@@ -34,6 +34,10 @@ SUBROUTINE DISCON ( avrSWAP, aviFAIL, accINFILE, avcOUTNAME, avcMSG ) BIND (C, N
    ! so I've added the compiler directive IMPLICIT_DLLEXPORT.
    
 USE, INTRINSIC :: ISO_C_Binding
+USE             :: DRC_Types
+USE             :: ReadSetParameters
+! USE             :: Controllers
+
 
 IMPLICIT                        NONE
 #ifndef IMPLICIT_DLLEXPORT
@@ -51,7 +55,12 @@ INTEGER(C_INT),         INTENT(INOUT) :: aviFAIL                        ! A flag
 CHARACTER(KIND=C_CHAR), INTENT(IN)    :: accINFILE (NINT(avrSWAP(50)))  ! The name of the parameter input file, 'DISCON.IN'.
 CHARACTER(KIND=C_CHAR), INTENT(IN)    :: avcOUTNAME(NINT(avrSWAP(51)))  ! OUTNAME (Simulation RootName) 
 CHARACTER(KIND=C_CHAR), INTENT(INOUT) :: avcMSG    (NINT(avrSWAP(49)))  ! MESSAGE (Message from DLL to simulation code [ErrMsg])  The message which will be displayed by the calling program if aviFAIL <> 0.        
+CHARACTER(SIZE(avcOUTNAME)-1)           :: RootName                         ! a Fortran version of the input C string (not considered an array here)    [subtract 1 for the C null-character]
+CHARACTER(SIZE(avcMSG)-1)               :: ErrMsg                           ! a Fortran version of the C string argument (not considered an array here) [subtract 1 for the C null-character]
 
+TYPE(ControlParameters), SAVE           :: CntrPar
+TYPE(LocalVariables), SAVE              :: LocalVar
+! TYPE(ObjectInstances), SAVE             :: objInst
 
    ! Local Variables:
 
