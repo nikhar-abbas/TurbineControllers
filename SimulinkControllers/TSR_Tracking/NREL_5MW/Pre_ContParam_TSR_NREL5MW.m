@@ -24,11 +24,11 @@ param.VS_om_n = 0.2; 1/(2*6.25);                 % Natural frequency, Hz. -- Tim
 
 % Blade Pitch Controller Parameters
 param.PC_zeta = 0.7;                         % Damping constant, --
-param.PC_om_n = 0.6;                         % Natural frequency, Hz.
+param.PC_om_n = 0.5;                         % Natural frequency, Hz.
 
 % Region 2.5 Gain Bias
-param.VS_GainBias = 50; 0.8; 0.31; 0.031;              % VS Controller Bias Gian for Region 2.5 smoothing, -.
-param.PC_GainBias = .001 ;0.081; 0.081; 0.81;              % Pitch Controller Bias Gian for Region 2.5 smoothing, -.
+param.VS_GainBias = 20; 0.8; 0.31; 0.031;              % VS Controller Bias Gian for Region 2.5 smoothing, -.
+param.PC_GainBias = .0002 ;0.081; 0.081; 0.81;              % Pitch Controller Bias Gian for Region 2.5 smoothing, -.
 
 % Wind Speed Estimator
 param.WSE_v0    = 11.4;
