@@ -19,16 +19,16 @@ param.filt_WindSpeedEst  = 0.2;            % Corner frequency for Wind Speed Fil
 param.filt_GB            = 1/10;           % Corner frequeny for Gain Bias Filter, Hz. -- (Currently arbitrary)
 
 % Variable Speed Torque Controller Parameters
-param.VS_zeta = 1;                        % Damping constant, --
-param.VS_om_n = 0.3; 1/(2*6.25);                 % Natural frequency, Hz. -- Time constant chosen to be on third the rotor frequency at rated. 
+param.VS_zeta = 0.7;                        % Damping constant, --
+param.VS_om_n = 0.2; 1/(2*6.25);                 % Natural frequency, Hz. -- Time constant chosen to be on third the rotor frequency at rated. 
 
 % Blade Pitch Controller Parameters
 param.PC_zeta = 0.7;                         % Damping constant, --
 param.PC_om_n = 0.6;                         % Natural frequency, Hz.
 
 % Region 2.5 Gain Bias
-param.VS_GainBias = 60; 0.8; 0.31; 0.031;              % VS Controller Bias Gian for Region 2.5 smoothing, -.
-param.PC_GainBias = .0001 ;0.081; 0.081; 0.81;              % Pitch Controller Bias Gian for Region 2.5 smoothing, -.
+param.VS_GainBias = 50; 0.8; 0.31; 0.031;              % VS Controller Bias Gian for Region 2.5 smoothing, -.
+param.PC_GainBias = .001 ;0.081; 0.081; 0.81;              % Pitch Controller Bias Gian for Region 2.5 smoothing, -.
 
 % Wind Speed Estimator
 param.WSE_v0    = 11.4;

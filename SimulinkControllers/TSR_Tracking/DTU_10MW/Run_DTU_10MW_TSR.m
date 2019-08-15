@@ -9,7 +9,10 @@
 
 % Fast Model 
 % ModDir = '/Users/nabbas/Documents/TurbineModels/DTU_10MW/DTU10MWRWT/Baseline';
-ModDir = '/Users/nabbas/Documents/TurbineModels/DTU_10MW/DTU10MWRWT_NAUTILUS_GoM_FAST_v1.00/Linearizations/Case1_AllFloat/';
+
+% ModDir = '/Users/nabbas/Documents/TurbineModels/DTU_10MW/DTU10MWRWT_NAUTILUS_GoM_FAST_v1.00/Linearizations/Case1_AllFloat/';
+% ModDir = '/Users/nabbas/Documents/TurbineModels/DTU_10MW/DTU10MWRWT_NAUTILUS_GoM_FAST_v1.00/Baseline/';
+
 ModDir = '/Users/nabbas/Documents/TurbineModels/DTU_10MW/DTU10MWRWT_OO_GoM_FAST_v1.00/Linearizations/Case1_AllFloat/';
 
 % Controller path
@@ -26,6 +29,7 @@ addpath(ContPath)
 ModName = 'DTU_10MW_OO_GoM.fst';
 ElastoFile = 'DTU_10MW_OO_GoM_ElastoDyn.dat';
 ServoFile = 'DTU_10MW_OO_GoM_ServoDyn.dat';
+
 FAST_InputFileName = [ModDir filesep ModName];
 
 %% Simulation and controller setup
@@ -62,9 +66,9 @@ vv_bpc = vv(Bopind(1):end);
 [Filt.Wind.b,Filt.Wind.a] = filt_1lp_D(ContParam.WindSpeedEstfilt_omn,dt); 
 
 %% Load Outlist
-% OutName = 'DTU_10MW_NAUTILUS_GoM.SFunc.out';
-% SFunc_OutfileName = [ModDir filesep OutName];
-% OutList = Post_LoadOutlist(SFunc_OutfileName); 
+OutName = 'DTU_10MW_OO_GoM.SFunc.out';
+SFunc_OutfileName = [ModDir filesep OutName];
+OutList = Post_LoadOutlist(SFunc_OutfileName); 
 %% Run Simulation
 % % TSR_opt = TSRvec(Cpvec == max(Cpvec));
 sim('TSR_Tracking_v2.mdl',[0,TMax]);

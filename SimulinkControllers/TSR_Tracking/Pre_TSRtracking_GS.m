@@ -168,11 +168,11 @@ vv_pc = vv(Bop_pc(1):end);
 PC_zeta = ContParam.PC_zeta;
 PC_om_n = ContParam.PC_om_n;
 
-% Linear fit for Apc w.r.t. beta
-pApc = polyfit(Betaop_pc,Apc,1);
-pBb_pc = polyfit(Betaop_pc,Bb_pc,1);
-Apc_f = pApc(1)*Betaop_pc + pApc(2);
-Bb_pc_f = pBb_pc(1)*Betaop_pc + pBb_pc(2);
+% % Linear fit for Apc w.r.t. beta
+% pApc = polyfit(Betaop_pc,Apc,1);
+% pBb_pc = polyfit(Betaop_pc,Bb_pc,1);
+% Apc_f = pApc(1)*Betaop_pc + pApc(2);
+% Bb_pc_f = pBb_pc(1)*Betaop_pc + pBb_pc(2);
 
 % Linear fit for Apc w.r.t. v
 pApc = polyfit(vv_pc,Apc,1);
@@ -186,9 +186,9 @@ Ki_pc = PC_om_n^2./Bb_pc_f ;
 % Kp_pc = 1./Bb_pc .* (2*PC_zeta*PC_om_n + Apc);
 % Ki_pc = PC_om_n^2./Bb_pc ;
 
-% Linear fit, as a function of beta
-pKp_pc = polyfit(Betaop_pc,Kp_pc,1);
-pKi_pc = polyfit(Betaop_pc,Ki_pc,1);
+% % Linear fit, as a function of beta
+% pKp_pc = polyfit(Betaop_pc,Kp_pc,1);
+% pKi_pc = polyfit(Betaop_pc,Ki_pc,1);
 
 % % Linear fit, as a function of v
 % pKp_pc = polyfit(vv_pc,Kp_pc,1);
@@ -207,6 +207,7 @@ GS.Kp_pc = Kp_pc;
 GS.Ki_pc = Ki_pc;
 GS.pA = polyfit(vv,A,1);
 GS.VS_vv = vv_vs; 
+GS.PC_vv = vv_pc;
 GS.PC_beta = Betaop_pc;
 % %% Gain Schedule
 % 

@@ -36,7 +36,7 @@ TSRvec = cpscan.TSR;
 zind = find(cpscan.BlPitch == 0);
 Cpvec = cpscan.Cpmat(:,zind)';
 TSR_opt = TSRvec(Cpvec == max(Cpvec));
-TSR_opt = 7.55
+TSR_opt = 7.55;
 % % Betavec = cpscan.BlPitch(zind:end);
 % % Cpmat = cpscan.Cpmat(:,zind:end);
 
