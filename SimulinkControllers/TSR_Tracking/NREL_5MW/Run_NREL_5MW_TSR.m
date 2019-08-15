@@ -15,7 +15,8 @@ ContPath = '/Users/nabbas/Documents/TurbineModels/TurbineControllers/SimulinkCon
 addpath(ContPath)
 
 %% Define Filenames
-ModName = '5MW_Land.fst';
+ModBase = '5MW_Land'
+ModName = [ModBase, '.fst'];
 ElastoFile = 'NRELOffshrBsline5MW_Onshore_ElastoDyn.dat';
 ServoFile = 'NRELOffshrBsline5MW_Onshore_ServoDyn.dat';
 
@@ -56,7 +57,7 @@ vv_bpc = vv(Bopind(1):end);
 [Filt.Wind.b,Filt.Wind.a] = filt_1lp_D(ContParam.filt_WindSpeedEst,dt); 
 
 %% Load Outlist
-OutName = '5MW_Land.SFunc.out';
+OutName = [ModBase, '.SFunc.out'];
 SFunc_OutfileName = [ModDir filesep OutName];
 OutList = Post_LoadOutlist(SFunc_OutfileName); 
 %% Run Simulation
