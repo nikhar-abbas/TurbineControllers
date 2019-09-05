@@ -16,7 +16,7 @@ param.rho           = 1.225;                % Air Density, kg/m^3.
 % Filter Cornering Frequencies
 param.filt_HSS           = 4.519 * 1/2;    % Corner frequency in the recursive, second order low pass filter of the HSS Speed, Hz. -- Chosen to be 3/4 of the first drivetrain natural frequency
 param.filt_WindSpeedEst  = 0.2;            % Corner frequency for Wind Speed Filt, Hz. -- (Currently arbitrary)
-param.filt_GB            = 1/2;           % Corner frequeny for Gain Bias Filter, Hz. -- (Currently arbitrary)
+param.filt_GB            = 1/5;           % Corner frequeny for Gain Bias Filter, Hz. -- (Currently arbitrary)
 
 % Variable Speed Torque Controller Parameters
 param.VS_zeta = 0.7;                        % Damping constant, --
