@@ -17,6 +17,7 @@ function [A,Bb,GS,Beta_op,vv] = Pre_TSRtracking_GS(ContParam,cpscan)
 % Outputs: A - Vector of system matrices at varied wind speeds.
 %          Bb - Vector of blade pitch input gain matrices at varied wind
 %               speeds
+%          GS - Gain Schedule structure. Contains all gain schedule info
 %          Beta_op - Vectore of operational blade pitch angles at varied
 %                    wind speeds, deg. 
 %          vv - Wind speeds swept and linearized at, m/s. 
@@ -39,7 +40,8 @@ TSRvec = cpscan.TSR;
 Cpvec = cpscan.Cpmat(:,(cpscan.BlPitch == 0));
 Betavec = cpscan.BlPitch .* pi/180;
 Cpmat = cpscan.Cpmat;
-
+Beta_del = Betavec(2) - Betavec(1);
+TSR_del = TSRvec(2) - TSRvec(1);
 %% Find Cp Operating Points
 TSRr = RRspeed*R/Vrat;
 vv_br = [Vmin:.1:Vrat]; 
@@ -71,41 +73,31 @@ dTSR = TSRvec(1:end-1) + (TSRvec(2) - TSRvec(1))/2;
 
 % ---- Cp Operating conditions ----
 CpTSR = zeros(1,length(Betavec));
-CpB = zeros(1,length(TSRvec));
 for Bi = 1:length(Betavec)
     CpTSR(Bi) = interp1(TSRvec, Cpmat(:,Bi), tsr); % Vector of Cp values corresponding to operational TSR
 end
 
 %Saturate operational TSR
-Cp_op(toi) = max( min(Cp_op(toi), max(CpTSR)), min(CpTSR));
+% Cp_op(toi) = max( min(Cp_op(toi), max(CpTSR)), min(CpTSR));               % might need to saturate
 
 % Operational Beta to be linearized around
-CpMi = find(CpTSR == max(CpTSR));
-Beta_op(toi) = interp1(CpTSR(CpMi:end),Betavec(CpMi:end),Cp_op(toi));
-% Beta_op(toi) = interp1(CpTSR,Betavec,Cp_op(toi));
+% CpMi = find(CpTSR == max(CpTSR));
+% Beta_op(toi) = interp1(CpTSR(CpMi:end),Betavec(CpMi:end),Cp_op(toi));     % might need to interpolate "above maximum" in for numerical stability
+Beta_op(toi) = interp1(CpTSR,Betavec,Cp_op(toi));
 
 % Saturate TSR and Beta
-Beta_op(toi) = max(min(Beta_op(toi),dB(end)),dB(1));
-tsr_sat(toi) = max(min(tsr,dTSR(end)),dTSR(1));
-tsr_sat(toi) = tsr_sat(toi);
+% Beta_op(toi) = max(min(Beta_op(toi),dB(end)),dB(1));                      % might need to saturate
+% tsr_sat(toi) = max(min(tsr,dTSR(end)),dTSR(1));
 
-for TSRi = 1:length(TSRvec)
-    CpB(TSRi) = interp1(Betavec,Cpmat(TSRi,:),Beta_op(toi)); % Vector of Cp values corresponding to operational Beta
-end
+% Linearized operation points
+[CpGrad_Beta,CpGrad_TSR] = gradient(Cpmat,1);
 
-% Derivative Vectors
-dCp_B = diff(CpTSR)./diff(Betavec); % Difference of Cp w.r.t. Beta
-dCp_tsr = diff(CpB)./diff(TSRvec); % Difference of Cp w.r.t. TSR
+Cp(toi) = interp2(Betavec,TSRvec,Cpmat,Beta_op(toi),tsr);
+dCpdB(toi) = interp2(Betavec,TSRvec,CpGrad_Beta,Beta_op(toi),tsr)./Beta_del;
+dCpdTSR(toi) = interp2(Betavec,TSRvec,CpGrad_TSR,Beta_op(toi),tsr)./TSR_del;
 
-
-% Operating Points on Cp Surface
-Cp(toi) = interp1(Betavec,CpTSR,Beta_op(toi));
-dCpdB(toi) = interp1(dB,dCp_B,Beta_op(toi));
-dCpdTSR(toi) = interp1(dTSR,dCp_tsr,tsr_sat(toi));
-
-
+%% Final derivatives and system "matrices"
 dtdb(toi) = Ng/2*rho*Ar*R*(1/tsr_sat(toi))*dCpdB(toi)*vv(toi)^2;
-
 dtdl = Ng/(2)*rho*Ar*R*vv(toi)^2*(1/tsr_sat(toi)^2)* (dCpdTSR(toi)*tsr_sat(toi) - Cp(toi)); % assume operating at optimal
 dldo = R/vv(toi)/Ng;
 dtdo = dtdl*dldo;
@@ -113,12 +105,6 @@ dtdo = dtdl*dldo;
 A(toi) = dtdo/J;            % Plant pole
 B_t = -Ng^2/J;              % Torque input gain 
 Bb(toi) = dtdb(toi)/J;     % BldPitch input gain
-
-% Fit A
-% pA = polyfit(vv,A,2);
-% A = pA(1).*vv.^2+pA(2).*vv+pA(3);
-% pBb = polyfit(vv,Bb,2);
-% Bb = pBb(1).*vv.^2+pBb(2).*vv+pBb(3);
 
 %% Wind Disturbance Input gain
 % dldv = -tsr/vv(toi); 
@@ -130,7 +116,6 @@ end
 
 
 %% Gain Schedule
-
 % ----- Generator torque controller -----
 % Plant Linearization Points
 Avs = A(TSRop == TSR_br(1));
@@ -147,8 +132,6 @@ VS_zeta = ContParam.VS_zeta;
 VS_om_n = ContParam.VS_om_n;
 
 % % Torque Controller Gains, as a function of linearized v
-% Kp_vs = 1/Bvs * (2*VS_zeta*VS_om_n + Avs_f);
-% Ki_vs = VS_om_n^2/Bvs;
 Kp_vs = 1/Bvs * (2*VS_zeta*VS_om_n + Avs);
 Ki_vs = VS_om_n^2/Bvs;
 
@@ -168,12 +151,6 @@ vv_pc = vv(Bop_pc(1):end);
 PC_zeta = ContParam.PC_zeta;
 PC_om_n = ContParam.PC_om_n;
 
-% % Linear fit for Apc w.r.t. beta
-% pApc = polyfit(Betaop_pc,Apc,1);
-% pBb_pc = polyfit(Betaop_pc,Bb_pc,1);
-% Apc_f = pApc(1)*Betaop_pc + pApc(2);
-% Bb_pc_f = pBb_pc(1)*Betaop_pc + pBb_pc(2);
-
 % Linear fit for Apc w.r.t. v
 pApc = polyfit(vv_pc,Apc,1);
 pBb_pc = polyfit(vv_pc,Bb_pc,1);
@@ -183,77 +160,17 @@ Bb_pc_f = pBb_pc(1)*vv_pc + pBb_pc(2);
 % % Blade Pitch Gains, as a function of linearized v or related beta
 Kp_pc = 1./Bb_pc_f .* (2*PC_zeta*PC_om_n + Apc_f);
 Ki_pc = PC_om_n^2./Bb_pc_f ;
-% Kp_pc = 1./Bb_pc .* (2*PC_zeta*PC_om_n + Apc);
-% Ki_pc = PC_om_n^2./Bb_pc ;
-
-% % Linear fit, as a function of beta
-% pKp_pc = polyfit(Betaop_pc,Kp_pc,1);
-% pKi_pc = polyfit(Betaop_pc,Ki_pc,1);
-
-% % Linear fit, as a function of v
-% pKp_pc = polyfit(vv_pc,Kp_pc,1);
-% pKi_pc = polyfit(vv_pc,Ki_pc,1);
 
 
+% ----- Save Gain Schedule -----
+GS.Kp_vs = Kp_vs;                               % VS Controller Proportional Gain
+GS.Ki_vs = Ki_vs*ones(1,length(Kp_vs));         % VS Controller Integral Gain
+GS.Kp_pc = Kp_pc;                               % Pitch Controller Proportional Gain
+GS.Ki_pc = Ki_pc;                               % Pitch Controller Integral Gain
+GS.pA = polyfit(vv,A,1);                        % Linear fit polynomials for system pole - unused
+GS.VS_vv = vv_vs;                               % Below rated wind speeds, (m/s)
+GS.PC_vv = vv_pc;                               % Above rated wind speeds, (m/s)
+GS.PC_beta = Betaop_pc;                         % Above rated blade pitch angles corresponding to gains, (rad)
 
-% ----- Save -----
-% GS.pKp_vs = pKp_vs;
-% GS.pKi_vs = pKi_vs;
-% GS.pKp_pc = pKp_pc;
-% GS.pKi_pc = pKi_pc;
-GS.Kp_vs = Kp_vs;
-GS.Ki_vs = Ki_vs*ones(1,length(Kp_vs));
-GS.Kp_pc = Kp_pc;
-GS.Ki_pc = Ki_pc;
-GS.pA = polyfit(vv,A,1);
-GS.VS_vv = vv_vs; 
-GS.PC_vv = vv_pc;
-GS.PC_beta = Betaop_pc;
-% %% Gain Schedule
-% 
-% % ----- Generator torque controller -----
-% % Plant Linearization Points
-% Avs = A(TSRop == TSR_br(1));
-% Bvs = B_t;
-% vv_vs = vv((TSRop == TSR_br(1)));
-% 
-% % Desired behavior
-% VS_zeta = ContParam.VS_zeta;
-% VS_om_n = ContParam.VS_om_n;
-% 
-% % Torque Controller Gains, as a function of v
-% Kp_vs = 1/Bvs * (2*VS_zeta*VS_om_n + Avs);
-% Ki_vs = VS_om_n^2/Bvs;
-% 
-% % Linear fit for Kp_vs, as a function of v
-% pKp_vs = polyfit(vv_vs,Kp_vs,1);
-% pKi_vs = Ki_vs;
-% 
-% % ------ Blade Pitch Controller ------
-% % Plant Linearization Points
-% Bop_pc = find(Beta_op>0);
-% Apc = A(Bop_pc(1)-1:end);
-% Bb_pc = Bb(Bop_pc(1)-1:end);
-% Betaop_pc = Beta_op(Bop_pc(1)-1:end);
-% vv_pc = vv(Bop_pc(1)-1:end);
-% 
-% % Desired behavior
-% PC_zeta = ContParam.PC_zeta;
-% PC_om_n = ContParam.PC_om_n;
-% 
-% % Blade Pitch Gains, as a function of v or related beta
-% Kp_pc = 1./Bb_pc .* (2*PC_zeta*PC_om_n + Apc);
-% Ki_pc = PC_om_n^2./Bb_pc ;
-% 
-% % Linear fit, as a function of beta
-% pKp_pc = polyfit(Betaop_pc,Kp_pc,1);
-% pKi_pc = polyfit(Betaop_pc,Ki_pc,1);
-% 
-% % ----- Save -----
-% GS.pKp_vs = pKp_vs;
-% GS.pKi_vs = pKi_vs;
-% GS.pKp_pc = pKp_pc;
-% GS.pKi_pc = pKi_pc;
-% 
 
 end
